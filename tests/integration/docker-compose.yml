@@ -1,0 +1,27 @@
+
+version: "3.4"
+
+services:
+  # postgres:
+  #   image: postgres:10
+  #   ports:
+  #     - 5432:5432
+  #   environment:
+  #     POSTGRES_USER: testuser
+  #     POSTGRES_PASSWORD: testpass
+  #     POSTGRES_DB: an_app
+  postgres:
+    image: postgres:10
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+  an_app:
+    image: an_app:latest
+    ports:
+      - 8080:8080
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: postgres

@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+aiohttp = "*"
+asyncpg = "*"
+python-dotenv = "*"
+sqlalchemy = "*"
+
+[dev-packages]
+pylint = "*"
+"flake8" = "*"
+mypy = "*"
+pydocstyle = "*"
+ipdb = "*"
+pytest = "*"
+pytest-asyncio = "*"
+requests = "*"
+
+[requires]
+python_version = "3.6"

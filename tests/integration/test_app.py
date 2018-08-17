@@ -1,13 +1,12 @@
 """Tests for the app."""
 
+from os import path
 from subprocess import Popen
 from sys import executable
 from time import sleep
 
 import requests
 import pytest
-from sqlalchemy.dialects import postgresql
-from sqlalchemy import text
 
 from an_app.app import application
 from an_app.db import pg_compile
@@ -15,13 +14,17 @@ from an_app.db import pg_compile
 
 class TestApp:
 
-    @pytest.fixture(scope='class', autouse=True)
-    def run_app(self):
-        """Run the app for testing."""
-        proc = Popen((executable, '-m', 'an_app.main'))
-        sleep(1)
-        yield
-        proc.terminate()
+    # Level 2: start up the app locally for testing
+    # Level 3: we don't need this anymore since we are running our
+    #          dockerized app
+    # @pytest.fixture(scope='class', autouse=True)
+    # def run_app(self):
+    #     """Run the app for testing."""
+    #     root_dir = path.abspath(path.join(path.dirname(__file__), '../..'))
+    #     proc = Popen((executable, '-m', 'an_app'), cwd=root_dir)
+    #     sleep(1)
+    #     yield
+    #     proc.terminate()
 
     @pytest.fixture()
     async def app(self):

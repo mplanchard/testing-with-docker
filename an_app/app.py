@@ -11,34 +11,33 @@ from .api import root, users
 from .db import create_tables, get_connection, get_metadata, get_tables
 
 
-def setenv(env: MutableMapping[str, str]) -> MutableMapping[str, str]:
-    """Update the environment to contain our values."""
-    env = copy(env)
-    env['DB_USER'] = 'testuser'
-    env['DB_PASS'] = 'testpass'
-    env['DB_HOST'] = 'localhost'
-    env['DB_PORT'] = '5432'
-    env['DB_NAME'] = 'an_app'
-    return env
-
-
-# def setenv(
-#     dotenv_path: str,
-#     env: MutableMapping[str, str]
-# ) -> MutableMapping[str, str]:
-#     """Pull the dotenv and source the environment."""
-#     denv = dotenv_values(dotenv_path=dotenv_path)
-#     return {**denv, **env}
+# def setenv(env: MutableMapping[str, str]) -> MutableMapping[str, str]:
+#     """Update the environment to contain our values."""
+#     env = copy(env)
+#     env['DB_USER'] = 'testuser'
+#     env['DB_PASS'] = 'testpass'
+#     env['DB_HOST'] = 'localhost'
+#     env['DB_PORT'] = '5432'
+#     env['DB_NAME'] = 'an_app'
 #     return env
+
+
+def setenv(
+    dotenv_path: str,
+    env: MutableMapping[str, str]
+) -> MutableMapping[str, str]:
+    """Pull the dotenv and source the environment."""
+    denv = dotenv_values(dotenv_path=dotenv_path)
+    return {**denv, **env}
 
 
 async def application() -> web.Application:
     """Return an app server ready to be started."""
-    # env = setenv(
-    #     path.join(path.abspath(path.dirname(__file__)), '../.env'),
-    #     environ
-    # )
-    env = setenv(environ)
+    env = setenv(
+        path.join(path.abspath(path.dirname(__file__)), '../.env'),
+        environ
+    )
+    # env = setenv(environ)
     app = web.Application()
     app.add_routes(root.endpoints(web))
     app.add_routes(users.users_endpoints(web))
